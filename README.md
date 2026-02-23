@@ -1,7 +1,7 @@
 # resume_builder_mvp
 A simple, fast, browser-based resume creator made as MVP for the Feature Challenge (HTML/CSS/JS only).
 
-Repo: https://maldonmisini.github.io/resume_builder_mvp/
+Live Demo: https://maldonmisini.github.io/resume_builder_mvp/
 
 What it does?
 
