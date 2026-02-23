@@ -1,6 +1,6 @@
 # resume_builder_mvp
 A simple, fast, browser-based resume creator made as MVP for the Feature Challenge (HTML/CSS/JS only).
-
+Live demo: https://maldonmisini.github.io/resume_builder_mvp/templates.html
 What it does?
 
 This tool lets you build a professional A4-style CV in minutes:
@@ -25,4 +25,3 @@ This tool lets you build a professional A4-style CV in minutes:
   - JPG
   - PNG
   - WEBP
-Live demo: https://maldonmisini.github.io/resume_builder_mvp/templates.html
