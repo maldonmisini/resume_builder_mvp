@@ -1,1 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates - Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="nav-buttons">
+                <button class="nav-button active" onclick="window.location.href='index.html'">
+                    <i class="fas fa-brush" id="active-button"></i>
+                    <span>Templates</span>
+                </button>
+                <button class="nav-button">
+                    <i class="fas fa-edit"></i>
+                    <span>Text Design</span>
+                </button>
+                <button class="nav-button" onclick="window.location.href='upload.html'">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Upload</span>
+                </button>
+            </div>
+
+            <section class="upload-section" id="templates-section">
+                <h3><i class="fas fa-brush"></i> Choose a Template</h3>
+
+                <div class="template-mini-grid">
+                    <div class="template-mini-card selected" data-template="pink" onclick="changeTemplate('pink')">
+                        <div class="mini-preview pink-mini">
+                            <img class="mini-profile" src="images/profile.png" alt="Profile">
+                            <div class="mini-info">
+                                <div class="mini-name">Name Surname</div>
+                                <div class="mini-about">Motivated & creative developer</div>
+                            </div>
+                            <div class="mini-signature">U.M.</div>
+                        </div>
+                        <div class="template-name">Modern Pink</div>
+                    </div>
+
+                    <div class="template-mini-card" data-template="dark" onclick="changeTemplate('dark')">
+                        <div class="mini-preview dark-mini">
+                            <img class="mini-profile" src="images/profile.png" alt="Profile">
+                            <div class="mini-info">
+                                <div class="mini-name">Name Surname</div>
+                                <div class="mini-about">Experienced & reliable</div>
+                            </div>
+                            <div class="mini-signature">A.B.</div>
+                        </div>
+                        <div class="template-name">Sleek Dark</div>
+                    </div>
+
+                    <div class="template-mini-card" data-template="mint" onclick="changeTemplate('mint')">
+                        <div class="mini-preview mint-mini">
+                            <img class="mini-profile" src="images/profile.png" alt="Profile">
+                            <div class="mini-info">
+                                <div class="mini-name">Name Surname</div>
+                                <div class="mini-about">UI/UX focused</div>
+                            </div>
+                            <div class="mini-signature">D.W.</div>
+                        </div>
+                        <div class="template-name">Calm Mint</div>
+                    </div>
+                </div>
+            </section>
+
+            <button class="my-projects-button" onclick="window.location.href='my-projects.html'">
+                <i class="fas fa-folder"></i> My Projects
+            </button>
+        </aside>
+        <main class="preview-area">
+            <div class="preview-header">
+                <h1>RESUME BUILDER</h1>
+                <div class="header-right">
+                    <div id="profile-container" style="display:none;">
+                        <div class="header-profile">
+                            <img id="header-avatar" src="images/profile.png" alt="Profile">
+                            <span id="header-name">Filan Fisteku</span>
+                        </div>
+                    </div>
+                    <button class="download-button" onclick="downloadPDF()">
+                        <i class="fas fa-file-download"></i> Download For Free
+                    </button>
+                </div>
+            </div>
+
+            <div class="preview-wrapper">
+                <div class="preview-a4" id="preview-area">
+                    <div class="resume-header">
+                        <img id="preview-photo" class="profile-photo" src="images/profile.png" alt="Profile">
+                        <div class="header-info">
+                            <h1 id="preview-name" contenteditable="true" class="editable">Name Surname</h1>
+                            <p id="preview-summary" contenteditable="true" class="editable">I am passionate full-stack
+                                developer with over eight years of...</p>
+                            <div class="header-personal-info">
+                                <p contenteditable="true" class="editable"><i class="fas fa-phone"></i> +383 123 456</p>
+                                <p contenteditable="true" class="editable"><i class="fas fa-envelope"></i>
+                                    maldon@gmail.com</p>
+                                <p contenteditable="true" class="editable"><i class="fa-solid fa-location-dot"></i>
+                                    Gjilan, Kosova</p>
+                            </div>
+                            <p id="preview-link">
+                                <i class="fas fa-link"></i> www.example.com
+                            </p>
+                        </div>
+                    </div>
+
+                    <section class="resume-section certifications">
+                        <h3>Certifications</h3>
+
+                        <div class="cert-and-signature-wrapper">
+                            <div id="preview-cert" class="certificate-card">
+                                <img src="images/certificate.avif" alt="Certificate">
+                                <div class="cert-content">
+                                    <h4 contenteditable="true" class="editable">Full-Stack Development</h4>
+                                    <p contenteditable="true" class="editable">Successfully completed intensive course.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="signature-beside-cert">
+                                <h3 class="signature-label">Signature</h3>
+                                <div id="signature-click-area" class="signature-clickable">
+                                    <img id="preview-signature" src="images/signature.png" alt="Your signature">
+                                    <div class="signature-overlay"><i class="fas fa-cloud-upload-alt"
+                                            id="signature-icon"></i> Click to upload your signature</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="resume-section experience">
+                        <h3>Experience</h3>
+                        <div class="item" id="experience-item-1">
+                            <h4 contenteditable="true" class="editable">Senior Developer – Tech Company</h4>
+                            <span class="date" contenteditable="true" class="editable">2021 – Present</span>
+                            <ul contenteditable="true" class="editable">
+                                <li>Built scalable web applications using React & Node.js</li>
+                                <li>Improved performance by 35% through code optimization</li>
+                            </ul>
+                        </div>
+                        <div class="item" id="experience-item-2">
+                            <h4 contenteditable="true" class="editable">Frontend Developer – Startup XYZ</h4>
+                            <span class="date" contenteditable="true" class="editable">2019 – 2021</span>
+                            <ul contenteditable="true" class="editable">
+                                <li>Developed responsive UI components</li>
+                                <li>Collaborated with UX designers</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="resume-section education">
+                        <h3>Education</h3>
+                        <div class="item">
+                            <h4 contenteditable="true" class="editable">BSc Computer Science</h4>
+                            <span class="date" contenteditable="true" class="editable">University Kadri Zeka, 2015 –
+                                2019</span>
+                        </div>
+                    </section>
+
+                    <section class="resume-section skills">
+                        <h3>Skills</h3>
+                        <div class="skills-grid" id="skills-grid">
+                        </div>
+                    </section>
+
+                    <section class="resume-section signature" style="display: none;">
+                        <h3>Signature</h3>
+                        <p class="signature-text" contenteditable="true" class="editable">U. Morina</p>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="login-modal" class="modal">
+        <div>
+            <span class="close" onclick="document.getElementById('login-modal').style.display='none'">×</span>
+            <label>Email</label>
+            <input type="email" placeholder="Email@example.com" id="email-input">
+            <label>Password</label>
+            <input type="password" placeholder="Password" id="password-input">
+            <button class="sign-in-btn" onclick="dummyLogin()">Sign In</button>
+            <button class="google-btn"><i class="fab fa-google"></i> Continue with Google</button>
+            <p>All data is secured!</p>
+        </div>
+    </div>
+
+    <div id="format-modal" class="modal small-modal">
+        <div>
+            <span class="close" onclick="document.getElementById('format-modal').style.display='none'">×</span>
+            <h3>Choose Format</h3>
+            <button onclick="exportResume('pdf')">PDF</button>
+            <button onclick="exportResume('jpg')">JPG</button>
+            <button onclick="exportResume('webp')">WEBP</button>
+            <button onclick="exportResume('png')">PNG</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
