@@ -25,4 +25,4 @@ This tool lets you build a professional A4-style CV in minutes:
   - JPG
   - PNG
   - WEBP
-Live demo: https://maldonmisini.github.io/resume-builder-mvp/templates.html
+Live demo: https://maldonmisini.github.io/resume_builder_mvp/templates.html
