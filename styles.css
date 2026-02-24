@@ -4,24 +4,35 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     background: #f0f2f5;
-    min-height: 100vh;
+    height: 100vh;
     color: #1e293b;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .main-container {
     display: flex;
     flex: 1;
     height: 100vh;
+    max-height: 100vh;
     background: #f0f2f5;
+    overflow: hidden;
 }
 
 .sidebar {
     width: 360px;
+    height: 100vh;
+    max-height: 100vh;
     background: #b56aed;
     color: white;
     padding: 30px 24px;
@@ -35,7 +46,6 @@ body {
 .nav-buttons {
     display: flex;
     border-radius: 12px;
-    overflow: hidden;
 }
 
 .nav-button {
@@ -350,6 +360,8 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    max-height: 100vh;
     background: #e5e7eb;
     overflow: hidden;
 }
@@ -402,7 +414,16 @@ body {
     justify-content: center;
     align-items: flex-start;
     padding: 30px 20px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    min-height: 0;
+}
+
+.pages-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
 }
 
 .preview-a4 {
@@ -417,6 +438,7 @@ body {
     line-height: 1.48;
     color: #0f172a;
     position: relative;
+    flex-shrink: 0;
 }
 
 .preview-a4 h2 {
@@ -800,4 +822,566 @@ body {
 .editable-skill:focus {
     outline: none;
     box-shadow: 0 0 0 2px #3b82f6;
+}
+
+/* ===================== BLOCK SYSTEM ===================== */
+
+/* Empty canvas state */
+.canvas-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 500px;
+    color: #94a3b8;
+    text-align: center;
+    padding: 40px;
+    transition: opacity 0.2s;
+}
+
+.canvas-empty-icon {
+    font-size: 52px;
+    margin-bottom: 18px;
+    opacity: 0.35;
+}
+
+.canvas-empty-state h3 {
+    font-size: 1.3rem;
+    color: #64748b;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.canvas-empty-state p {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+/* Resume block wrapper */
+.resume-block {
+    position: relative;
+    padding: 2px 0;
+    transition: outline 0.15s ease;
+}
+
+.resume-block:hover {
+    outline: 2px dashed rgba(99, 102, 241, 0.25);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* Block controls (delete button) */
+.block-controls {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+    z-index: 20;
+}
+
+.resume-block:hover .block-controls {
+    opacity: 1;
+}
+
+.block-delete-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: #ef4444;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+    transition: all 0.2s ease;
+}
+
+.block-delete-btn:hover {
+    background: #dc2626;
+    transform: scale(1.15);
+}
+
+/* Block animations */
+@keyframes blockFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blockFadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(8px);
+        height: 0;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+}
+
+.block-fade-out {
+    animation: blockFadeOut 0.22s ease forwards;
+}
+
+.block-drop-in {
+    animation: blockFadeIn 0.3s ease forwards;
+}
+
+
+
+/* ===================== INSERT ZONES ===================== */
+.insert-zone {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    animation: blockFadeIn 0.2s ease forwards;
+    opacity: 1;
+}
+
+.iz-inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.iz-line {
+    flex: 1;
+    height: 2px;
+    background: rgba(99, 102, 241, 0.25);
+    border-radius: 2px;
+    transition: background 0.15s;
+}
+
+.iz-badge {
+    font-size: 11px;
+    color: rgba(99, 102, 241, 0.5);
+    white-space: nowrap;
+    padding: 3px 10px;
+    border: 1.5px dashed rgba(99, 102, 241, 0.3);
+    border-radius: 20px;
+    background: rgba(99, 102, 241, 0.04);
+    transition: all 0.15s;
+}
+
+.insert-zone.iz-active .iz-line {
+    background: #6366f1;
+}
+
+.insert-zone.iz-active .iz-badge {
+    color: white;
+    background: #6366f1;
+    border-color: #6366f1;
+    transform: scale(1.08);
+    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+}
+
+/* ===================== TEXT DESIGN BLOCKS ===================== */
+.td-block-heading {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 14px 0 6px;
+    border-bottom: 2px solid #bfdbfe;
+    padding-bottom: 6px;
+}
+
+.td-block-subheading {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1d4ed8;
+    margin: 10px 0 4px;
+}
+
+.td-block-body {
+    font-size: 13.5px;
+    color: #334155;
+    line-height: 1.65;
+    margin: 6px 0;
+}
+
+.td-block-divider {
+    border: none;
+    border-top: 2px solid #e2e8f0;
+    margin: 12px 0;
+}
+
+/* ===================== TEXT DESIGN SIDEBAR ===================== */
+.td-font-search-wrap {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.td-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    pointer-events: none;
+}
+
+.td-font-search {
+    width: 100%;
+    padding: 9px 12px 9px 32px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.18);
+    color: white;
+    font-size: 13px;
+    outline: none;
+}
+
+.td-font-search::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.td-font-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.td-font-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.td-font-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+}
+
+.td-font-item {
+    padding: 9px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+    color: white;
+    border: 2px solid transparent;
+    transition: all 0.15s;
+}
+
+.td-font-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.td-font-item.td-font-selected {
+    border-color: white;
+    background: rgba(255, 255, 255, 0.22);
+    font-weight: 700;
+}
+
+/* Drag cards */
+.td-hint {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 8px;
+}
+
+.td-style-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.td-style-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 11px 14px;
+    cursor: grab;
+    border: 2px dashed rgba(255, 255, 255, 0.28);
+    transition: all 0.18s;
+    user-select: none;
+}
+
+.td-style-card:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: white;
+    transform: translateY(-2px);
+}
+
+.td-style-card.td-dragging {
+    opacity: 0.55;
+    transform: scale(0.97);
+}
+
+.td-drag-handle {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 13px;
+}
+
+.td-card-label {
+    font-weight: 600;
+    color: white;
+}
+
+.td-heading-label {
+    font-size: 18px;
+}
+
+.td-subheading-label {
+    font-size: 14px;
+}
+
+.td-body-label {
+    font-size: 12px;
+}
+
+.td-section-label {
+    font-size: 12px;
+}
+
+/* Section blocks in text design sidebar */
+.td-section-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.td-section-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    padding: 10px 13px;
+    cursor: grab;
+    border: 1.5px dashed rgba(255, 255, 255, 0.2);
+    transition: all 0.15s;
+    user-select: none;
+}
+
+.td-section-card:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+.td-section-card.td-dragging {
+    opacity: 0.5;
+}
+
+.td-section-icon {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.td-section-info h4 {
+    font-size: 13px;
+    color: white;
+    font-weight: 600;
+    margin: 0;
+}
+
+.td-section-info p {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 2px 0 0;
+}
+
+/* Formatting toolbar */
+.td-format-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.td-select {
+    flex: 1;
+    padding: 7px 9px;
+    border-radius: 7px;
+    border: none;
+    background: rgba(255, 255, 255, 0.18);
+    color: white;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+.td-select option {
+    background: #7c3aed;
+}
+
+.td-size-input {
+    width: 52px;
+    padding: 7px 8px;
+    border-radius: 7px;
+    border: none;
+    background: rgba(255, 255, 255, 0.18);
+    color: white;
+    font-size: 12px;
+    outline: none;
+    text-align: center;
+}
+
+.td-format-buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-bottom: 7px;
+}
+
+.td-fmt-btn {
+    flex: 1;
+    min-width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.td-fmt-btn:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: translateY(-1px);
+}
+
+.td-fmt-btn:active {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.td-color-label {
+    font-size: 12px;
+    color: white;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
+.td-color-input {
+    width: 38px;
+    height: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    cursor: pointer;
+    background: transparent;
+    padding: 2px;
+}
+
+/* My projects section */
+.my-projects-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+/* ── Page number label ──────────────────────────────────── */
+.page-num-label {
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+}
+
+/* ── Color trigger button ────────────────────────────────── */
+.td-color-trigger {
+    flex: 1;
+    padding: 7px 10px;
+    border-radius: 7px;
+    border: none;
+    background: rgba(255, 255, 255, 0.18);
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.15s;
+}
+
+.td-color-trigger:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+@media print {
+
+    html,
+    body {
+        overflow: visible !important;
+        height: auto !important;
+    }
+
+    .sidebar,
+    .preview-header,
+    .preview-header~* {
+        display: none !important;
+    }
+
+    .main-container,
+    .preview-area,
+    .preview-wrapper {
+        display: block !important;
+        overflow: visible !important;
+        height: auto !important;
+        background: white !important;
+    }
+
+    .pages-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0 !important;
+    }
+
+    .preview-a4 {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        page-break-after: always;
+        break-after: page;
+    }
+
+    .block-controls,
+    .insert-zone,
+    .page-num-label {
+        display: none !important;
+    }
+
+    @page {
+        size: 794px 1123px;
+        margin: 0;
+    }
 }
