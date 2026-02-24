@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Design – Resume Builder</title>
+  <link rel="stylesheet" href="styles.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Acme&family=Inika&family=Tilt+Warp&family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&family=Lato:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body class="td-page">
+
+  <div class="main-container">
+
+    <!-- ── SIDEBAR ─────────────────────────────── -->
+    <aside class="sidebar">
+      <div class="nav-buttons">
+        <button class="nav-button" onclick="window.location.href='index.html'">
+          <i class="fas fa-brush"></i>
+          <span>Templates</span>
+        </button>
+        <button class="nav-button active" onclick="window.location.href='text-design.html'">
+          <i class="fas fa-edit" id="active-button"></i>
+          <span>Text Design</span>
+        </button>
+        <button class="nav-button" onclick="window.location.href='upload.html'">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <span>Upload</span>
+        </button>
+      </div>
+
+      <!-- Fonts -->
+      <section class="upload-section">
+        <h3><i class="fas fa-font"></i> Fonts</h3>
+        <div class="td-font-search-wrap">
+          <i class="fas fa-search td-search-icon"></i>
+          <input type="text" id="td-font-search" class="td-font-search" placeholder="Search for fonts"
+            oninput="filterFonts(this.value)">
+        </div>
+        <div class="td-font-list">
+          <div class="td-font-item" data-font="Acme" onclick="selectFont('Acme')" style="font-family:'Acme'">Acme</div>
+          <div class="td-font-item" data-font="Inika" onclick="selectFont('Inika')" style="font-family:'Inika'">Inika
+          </div>
+          <div class="td-font-item" data-font="Tilt Warp" onclick="selectFont('Tilt Warp')"
+            style="font-family:'Tilt Warp'">Tilt Warp</div>
+          <div class="td-font-item" data-font="Roboto" onclick="selectFont('Roboto')" style="font-family:'Roboto'">
+            Roboto</div>
+          <div class="td-font-item td-font-selected" data-font="Poppins" onclick="selectFont('Poppins')"
+            style="font-family:'Poppins'">Poppins</div>
+          <div class="td-font-item" data-font="Open Sans" onclick="selectFont('Open Sans')"
+            style="font-family:'Open Sans'">Open Sans</div>
+          <div class="td-font-item" data-font="Playfair Display" onclick="selectFont('Playfair Display')"
+            style="font-family:'Playfair Display'">Playfair Display</div>
+          <div class="td-font-item" data-font="Montserrat" onclick="selectFont('Montserrat')"
+            style="font-family:'Montserrat'">Montserrat</div>
+          <div class="td-font-item" data-font="Lato" onclick="selectFont('Lato')" style="font-family:'Lato'">Lato</div>
+        </div>
+      </section>
+
+      <!-- Text Styles — drag these -->
+      <section class="upload-section">
+        <h3><i class="fas fa-text-height"></i> Text Styles</h3>
+        <p class="td-hint"><i class="fas fa-hand-pointer"></i> Drag onto the resume to add</p>
+        <div class="td-style-cards">
+          <div class="td-style-card" draggable="true" data-type="heading" ondragstart="onDragStart(event)"
+            ondragend="onDragEnd(event)">
+            <span class="td-drag-handle"><i class="fas fa-grip-vertical"></i></span>
+            <span class="td-card-label td-heading-label">Add a heading</span>
+          </div>
+          <div class="td-style-card" draggable="true" data-type="subheading" ondragstart="onDragStart(event)"
+            ondragend="onDragEnd(event)">
+            <span class="td-drag-handle"><i class="fas fa-grip-vertical"></i></span>
+            <span class="td-card-label td-subheading-label">Add a subheading</span>
+          </div>
+          <div class="td-style-card" draggable="true" data-type="body" ondragstart="onDragStart(event)"
+            ondragend="onDragEnd(event)">
+            <span class="td-drag-handle"><i class="fas fa-grip-vertical"></i></span>
+            <span class="td-card-label td-body-label">Add body text</span>
+          </div>
+          <div class="td-style-card" draggable="true" data-type="divider" ondragstart="onDragStart(event)"
+            ondragend="onDragEnd(event)">
+            <span class="td-drag-handle"><i class="fas fa-grip-vertical"></i></span>
+            <span class="td-card-label td-section-label">── Divider</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Blocks — drag these -->
+      <section class="upload-section">
+        <h3><i class="fas fa-th-large"></i> Section Blocks</h3>
+        <p class="td-hint"><i class="fas fa-hand-pointer"></i> Add full resume sections</p>
+        <div class="td-section-cards">
+
+          <div class="td-section-card" draggable="true" data-type="experience-item" ondragstart="onDragStart(event)"
+            ondragend="onDragEnd(event)">
+            <div class="td-section-icon"><i class="fas fa-briefcase"></i></div>
+            <div class="td-section-info">
+              <h4>Experience</h4>
+              <p>Job title, dates &amp; bullets</p>
+            </div>
+          </div>
+
+          <div class="td-section-card" draggable="true" data-type="education-item" ondragstart="onDragStart(event)"
+            ondragend="onDragEnd(event)">
+            <div class="td-section-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="td-section-info">
+              <h4>Education</h4>
+              <p>Degree &amp; university</p>
+            </div>
+          </div>
+
+          <div class="td-section-card" draggable="true" data-type="skills-row" ondragstart="onDragStart(event)"
+            ondragend="onDragEnd(event)">
+            <div class="td-section-icon"><i class="fas fa-code"></i></div>
+            <div class="td-section-info">
+              <h4>Skills</h4>
+              <p>Tag-style skill badges</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Formatting -->
+      <section class="upload-section">
+        <h3><i class="fas fa-sliders-h"></i> Formatting</h3>
+        <p class="td-hint">Click a text block first, then apply</p>
+        <div class="td-format-row">
+          <select id="td-font-select" class="td-select" onchange="applyFormatting('fontFamily', this.value)">
+            <option value="Poppins">Poppins</option>
+            <option value="Acme">Acme</option>
+            <option value="Inika">Inika</option>
+            <option value="Tilt Warp">Tilt Warp</option>
+            <option value="Roboto">Roboto</option>
+            <option value="Open Sans">Open Sans</option>
+            <option value="Playfair Display">Playfair Display</option>
+            <option value="Montserrat">Montserrat</option>
+            <option value="Lato">Lato</option>
+          </select>
+          <input type="number" id="td-font-size" class="td-size-input" value="14" min="8" max="72"
+            onchange="applyFormatting('fontSize', this.value + 'px')">
+        </div>
+        <div class="td-format-buttons">
+          <button class="td-fmt-btn" title="Bold" onclick="applyFormatting('bold')"><b>B</b></button>
+          <button class="td-fmt-btn" title="Italic" onclick="applyFormatting('italic')"><i>I</i></button>
+          <button class="td-fmt-btn" title="Underline" onclick="applyFormatting('underline')"><u>U</u></button>
+          <button class="td-fmt-btn" title="Strikethrough" onclick="applyFormatting('strikeThrough')"><s>S</s></button>
+        </div>
+        <div class="td-format-buttons">
+          <button class="td-fmt-btn" title="Align Left" onclick="applyFormatting('justifyLeft')"><i
+              class="fas fa-align-left"></i></button>
+          <button class="td-fmt-btn" title="Align Center" onclick="applyFormatting('justifyCenter')"><i
+              class="fas fa-align-center"></i></button>
+          <button class="td-fmt-btn" title="Align Right" onclick="applyFormatting('justifyRight')"><i
+              class="fas fa-align-right"></i></button>
+          <button class="td-fmt-btn" title="Justify" onclick="applyFormatting('justifyFull')"><i
+              class="fas fa-align-justify"></i></button>
+        </div>
+        <div class="td-format-buttons">
+          <button class="td-fmt-btn" title="Ordered List" onclick="applyFormatting('insertOrderedList')"><i
+              class="fas fa-list-ol"></i></button>
+          <button class="td-fmt-btn" title="Unordered List" onclick="applyFormatting('insertUnorderedList')"><i
+              class="fas fa-list-ul"></i></button>
+          <button class="td-fmt-btn" title="Indent" onclick="applyFormatting('indent')"><i
+              class="fas fa-indent"></i></button>
+          <button class="td-fmt-btn" title="Outdent" onclick="applyFormatting('outdent')"><i
+              class="fas fa-outdent"></i></button>
+        </div>
+        <div class="td-format-row" style="align-items:center;gap:8px;">
+          <label class="td-color-label" style="white-space:nowrap;font-size:12px;color:white;opacity:0.85;"><i
+              class="fas fa-palette"></i> Color</label>
+          <input type="color" id="td-color-picker" value="#1e293b"
+            style="width:38px;height:30px;border:2px solid rgba(255,255,255,0.25);border-radius:6px;cursor:pointer;background:transparent;padding:2px;"
+            onmousedown="(function(){var sel=window.getSelection();if(sel&&sel.rangeCount>0){var r=sel.getRangeAt(0),n=r.commonAncestorContainer,h=n.nodeType===1?n:n.parentElement;if(h&&h.closest('[contenteditable]'))window._savedRange=r.cloneRange();}})()"
+            onchange="(function(val){var r=window._savedRange;if(r){var n=r.commonAncestorContainer,h=n.nodeType===1?n:n.parentElement,ed=h&&h.closest('[contenteditable]');if(ed){ed.focus();var s=window.getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('foreColor',false,val);if(typeof saveSession==='function')saveSession();return;}}document.execCommand('foreColor',false,val);})(this.value)">
+          <button class="td-fmt-btn"
+            style="flex:unset;padding:0 12px;font-size:11px;font-weight:600;white-space:nowrap;"
+            onmousedown="event.preventDefault()"
+            onclick="(function(){var val=document.getElementById('td-color-picker').value;var sel=window.getSelection();if(sel&&sel.rangeCount>0){var r=sel.getRangeAt(0),n=r.commonAncestorContainer,h=n.nodeType===1?n:n.parentElement,ed=h&&h.closest('[contenteditable]');if(ed){ed.focus();var s=window.getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('foreColor',false,val);if(typeof saveSession==='function')saveSession();return;}}document.execCommand('foreColor',false,val);})()">
+            Apply
+          </button>
+        </div>
+      </section>
+
+      <button class="my-projects-button" onclick="window.location.href='my-projects.html'">
+        <i class="fas fa-folder"></i> My Projects
+      </button>
+    </aside>
+
+    <!-- ── MAIN ──────────────────────────────────── -->
+    <main class="preview-area">
+      <div class="preview-header">
+        <h1>RESUME BUILDER</h1>
+        <div class="header-right">
+          <button class="download-button" onclick="downloadPDF()">
+            <i class="fas fa-file-download"></i> Download For Free
+          </button>
+        </div>
+      </div>
+
+      <div class="preview-wrapper">
+        <div id="pages-container" class="pages-container"></div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Format Modal -->
+  <div id="format-modal" class="modal small-modal">
+    <div>
+      <span class="close" onclick="document.getElementById('format-modal').style.display='none'">×</span>
+      <h3>Choose Format</h3>
+      <button onclick="exportResume('pdf')">PDF</button>
+      <button onclick="exportResume('jpg')">JPG</button>
+      <button onclick="exportResume('webp')">WEBP</button>
+      <button onclick="exportResume('png')">PNG</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
