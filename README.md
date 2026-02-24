@@ -10,7 +10,7 @@ This tool lets you build a professional A4-style CV in minutes:
 - Start with one clean minimalist template (personal info, sections for summary, experience, education, skills, certifications, signature)
 - Edit every part of the text yourself (planned Future AI assistance for rewriting or improving text sections)
   - Write or change any text (summary, job titles, descriptions, dates...)
-  - Add or remove sections related to experience, skills, education... 
+  - Add or remove sections related to summary, experience, skills, education... 
   - Change font size, make text bold, italic, underlined
   - Pick text color
 - Upload files directly from your computer:
@@ -20,10 +20,5 @@ This tool lets you build a professional A4-style CV in minutes:
 - Add one clickable personal link (portfolio, LinkedIn, GitHub, personal website...)
   → the link works even when someone opens the final PDF
 - See real-time preview on the right - looks exactly like the printed/saved version
-- Click "Apply" → current version saves automatically with date/time
+- Download selected resume (PDF, JPG, PNG, WEBP)
 - Go to "My Projects" to see all your saved resumes
-- Download selected resume after a quick 'dummy' login screen:
-  - PDF
-  - JPG
-  - PNG
-  - WEBP
