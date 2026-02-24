@@ -10,6 +10,9 @@ This tool lets you build a professional A4-style CV in minutes:
 - Start with one clean minimalist template (personal info, sections for summary, experience, education, skills, certifications, signature)
 - Edit every part of the text yourself (planned Future AI assistance for rewriting or improving text sections)
   - Write or change any text (summary, job titles, descriptions, dates...)
+  - Add or remove sections related to experience, skills, education... 
+  - Change font size, make text bold, italic, underlined
+  - Pick text color
 - Upload files directly from your computer:
   - Profile photo
   - Certificate or diploma
